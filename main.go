@@ -2,11 +2,23 @@ package main
 
 import (
     "github.com/gorilla/mux"
-    "log"
     "net/http"
+    "fmt"
+    "github.com/AENCO-Global/Chain-go-sdk"
 )
 
 func main() {
-    router := mux.NewRouter()
-    log.Fatal(http.ListenAndServe(":888", router))
+    route := mux.NewRouter()
+
+    route.HandleFunc("/" , func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "Some Variables" ,r)
+    })
+
+    route.HandleFunc("/version" , func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprint(w, "Version" ,":1")
+    })
+
+
+    // Set up the listerner for the incoming requests
+    http.ListenAndServe(":8888", route)
 }
